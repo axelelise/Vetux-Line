@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %} 
+
+{% block title %}Fusion++{% endblock %} 
+
+{% block body %} 
+
+    <style>
+        #form_melange_type, #btn_Submit{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-bottom:1em;
+            font-size: 25px;
+        }
+
+        #form_melange_type{
+            margin-top:10%;
+        }
+
+        #form_melange_type_1{
+            margin-left: 5em;
+        }
+        
+    </style>
+
+    <div id="form">
+        {% if form is defined %}
+            {{ form_start(form) }}
+                {{ form_rest(form) }}
+                <div id="btn_Submit">
+                    <button type="submit">Enregistrer</button>
+                </div>
+                
+            {{ form_end(form) }}
+        {% endif %}
+    </div>
+    
+
+    {% if choix is defined %}
+        <h1>{{choix}}</h1>
+    {% endif %}
+
+{% endblock %}
