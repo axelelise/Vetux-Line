@@ -13,20 +13,27 @@
             font-size: 25px;
         }
 
+        #btn_Submit button{
+            font-size: 20px;
+        }
+
         #form_melange_type{
             margin-top:10%;
         }
 
-        #form_melange_type_1{
-            margin-left: 5em;
+        #form_melange_type_0{
+            margin-right: 5em;
         }
         
     </style>
 
     <div id="form">
         {% if form is defined %}
-            {{ form_start(form) }}
-                {{ form_rest(form) }}
+            {{ form_start(form.type) }}
+                <div id="form_melange_type">
+                    {{ form_rest(form.type) }}
+                </div>
+                
                 <div id="btn_Submit">
                     <button type="submit">Enregistrer</button>
                 </div>

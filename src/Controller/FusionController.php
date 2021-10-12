@@ -13,7 +13,7 @@ class FusionController extends AbstractController
     /**
      * @Route("/index", name="index")
      */
-    public function index(Request $request): Response
+    public function index1(Request $request): Response
     {
 
         $form = $this->createForm(FormMelangeType::class);
@@ -33,5 +33,38 @@ class FusionController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+    function Convertisseur($taille_inch){
+        $Resultat = $taille_inch * 2.54;
+        echo($Resultat);
+        return $Resultat;
+    }
+
+    
+    /**
+     * @Route("/test", name="test")
+     */
+
+    public function csvToArray() 
+    {
+        $file = "../src/miniFrGer/small-french-client.csv";
+        $csv = array_map('str_getcsv', file($file));
+        array_walk($csv, function(&$a) use ($csv) {
+        $a = array_combine($csv[0], $a);
+            });
+            array_shift($csv); # remove column header
+            //var_dump($csv);
+        return $this->redirectToRoute('index' , array(
+            'tableau1' => $csv,));
+    }
+
+    /**
+     * @Route("/", name="home")
+     */
+    public function index()
+    {
+        return $this->render('Mission 1/upload.html.twig');
+    }
 }
+
 ?> 
