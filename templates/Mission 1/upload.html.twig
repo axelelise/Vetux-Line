@@ -8,14 +8,59 @@
 
         <input type="hidden" name="token" value="{{ csrf_token('upload') }}" />
 
-        <div>
-            <label for="myfile">File to upload:</label>
+        <div id="import">
+            <label for="myfile">Importer vos fichier:</label>
+        </div>
+
+        <div id="chose1">
             <input type="file" name="myfile" id="myfile">
+        </div>
+
+        <div id="chose2">
             <input type="file" name="myfile2" id="myfile">
         </div>
 
-        <button type="submit">Send</button>
+        <div id="bouton">
+        <button type="submit" id="submit">Envoyer</button>
+        </div>
 
   </form>
+
+  <style>
+      #import{
+        text-decoration: underline;
+        margin-top:2em;
+        font-size: 50px;
+        margin-left : 2em;
+      }
+
+      #chose1{
+        margin-top:2%;
+        margin-left:4%;
+        margin-left : 2em;
+        font-size: 4em;
+      }
+
+      #chose2{
+        margin-top:2%;
+        margin-left:4%;
+        margin-left : 2em;
+        font-size: 4em;
+      }
+
+      #bouton{
+        margin-top:2%;
+        margin-left : 2em;
+        font-size: 4em;
+      }
+
+      #myfile{
+        font-size: 30px;
+      }
+
+      #submit{
+        font-size: 30px;
+      }
+  </style>
 
 {% endblock %}
