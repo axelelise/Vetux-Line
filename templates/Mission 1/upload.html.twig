@@ -8,15 +8,15 @@
 
         <input type="hidden" name="token" value="{{ csrf_token('upload') }}" />
 
-        <div id="import">
+        <div id="titre">
             <label for="myfile">Importer vos fichier:</label>
         </div>
 
-        <div id="chose1">
+        <div id="import1">
             <input type="file" name="myfile" id="myfile">
         </div>
 
-        <div id="chose2">
+        <div id="import2">
             <input type="file" name="myfile2" id="myfile">
         </div>
 
@@ -27,39 +27,31 @@
   </form>
 
   <style>
-      #import{
+      #titre{
         text-decoration: underline;
         margin-top:2em;
         font-size: 50px;
-        margin-left : 2em;
+        margin-left : 1em;
+        margin-bottom: 0.5em;
       }
 
-      #chose1{
-        margin-top:2%;
-        margin-left:4%;
-        margin-left : 2em;
-        font-size: 4em;
-      }
-
-      #chose2{
-        margin-top:2%;
-        margin-left:4%;
-        margin-left : 2em;
+      #import1,#import2{
+        margin-left : 3em;
         font-size: 4em;
       }
 
       #bouton{
         margin-top:2%;
-        margin-left : 2em;
+        margin-left : 1em;
         font-size: 4em;
       }
 
       #myfile{
-        font-size: 30px;
+        font-size: 25px;
       }
 
       #submit{
-        font-size: 30px;
+        font-size: 25px;
       }
   </style>
 

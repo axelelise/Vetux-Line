@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %} 
+
+{% block title %}Fusion++{% endblock %} 
+
+{% block body %} 
+
+<h1>Tableau 3</h1>
+<ul>
+    {% for tab3 in tab3 %}
+        <li>{{ tab3.NameSet|e }}</li>
+    {% endfor %}
+</ul>
+
+
+{% endblock %}
