@@ -14,12 +14,11 @@ class UploadController extends AbstractController
     /**
      * @Route("/doUpload", name="do-upload")
      * @param Request $request
-     * @param string $uploadDir
      * @param FileUploader $uploader
      * @param LoggerInterface $logger
      * @return Response
      */
-    public function index(Request $request, string $uploadDir,
+    public function index(Request $request, 
                       FileUploader $uploader, LoggerInterface $logger): Response
     {
         $token = $request->get("token");

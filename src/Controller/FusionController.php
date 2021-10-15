@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Service\Convertisseur;
 
 class FusionController extends AbstractController
 {
@@ -24,9 +25,7 @@ class FusionController extends AbstractController
             
             $choix = $form["type"]->getData();
 
-            return $this->render('Mission 1/index.html.twig', [
-                'choix' => $choix
-            ]);
+            return $this->redirectToRoute('test',['choixMelange' => $choix,]);
         }
 
         return $this->render('Mission 1/index.html.twig', [
@@ -42,20 +41,59 @@ class FusionController extends AbstractController
 
     
     /**
-     * @Route("/test", name="test")
+     * @Route("/test/{choixMelange}", name="test")
      */
 
-    public function csvToArray() 
+    public function csvToArrays(Convertisseur $csv, $choixMelange) 
     {
         $file = "../src/miniFrGer/small-french-client.csv";
-        $csv = array_map('str_getcsv', file($file));
-        array_walk($csv, function(&$a) use ($csv) {
-        $a = array_combine($csv[0], $a);
-            });
-            array_shift($csv); # remove column header
-            //var_dump($csv);
-        return $this->redirectToRoute('index' , array(
-            'tableau1' => $csv,));
+        $tab1 = $csv->csvToArray($file);
+        
+        $file = "../src/miniFrGer/small-german-client.csv";
+        $tab2 = $csv->csvToArray($file);
+
+        /**
+         * Recuperer le type de melange 
+         * Faire les melanges selon l'utilisateur
+         * Creer le tab3 
+         * Revoyer le tab3 dans l'affichage pour valider 
+         */
+
+        if($choixMelange === "Entrelacé"){
+            
+            $logueurMax = 0;
+            if(count($tab1)>count($tab2)){
+                $logueurMax = count($tab1);
+            }
+            else{
+                $logueurMax = count($tab2);
+            }
+
+            for($i=0; $i<$logueurMax; $i++){
+                if($i < count($tab1)){
+                    $tab3[] = $tab1[$i]; 
+                }
+                if($i < count($tab2)){
+                    $tab3[] = $tab2[$i]; 
+                }
+            }
+
+        }
+        elseif($choixMelange === "Séquentiel"){
+            for($i=0;$i<count($tab1);$i++){
+                $tab3[] = $tab1[$i];
+            }
+            for($i=0;$i<count($tab2);$i++){
+                $tab3[] = $tab2[$i];
+            }
+        }
+        else{
+            return $this->redirectToRoute('index');
+        }
+
+        return $this->render('Mission 1/tableau.html.twig', [
+            'tab3' => $tab3
+        ]);
     }
 
     /**
