@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Upload file{% endblock %}
+
+{% block body %}
+
+  <form action="{{ path('do-upload') }}" method="post" enctype="multipart/form-data">
+
+        <input type="hidden" name="token" value="{{ csrf_token('upload') }}" />
+
+        <div id="titre">
+            <label for="myfile">Importer vos fichier:</label>
+        </div>
+
+        <div id="import1">
+            <input type="file" name="myfile" id="myfile">
+        </div>
+
+        <div id="import2">
+            <input type="file" name="myfile2" id="myfile">
+        </div>
+
+        <div id="bouton">
+        <button type="submit" id="submit">Envoyer</button>
+        </div>
+
+  </form>
+
+  <style>
+      #titre{
+        text-decoration: underline;
+        margin-top:2em;
+        font-size: 50px;
+        margin-left : 1em;
+        margin-bottom: 0.5em;
+      }
+
+      #import1,#import2{
+        margin-left : 3em;
+        font-size: 4em;
+      }
+
+      #bouton{
+        margin-top:2%;
+        margin-left : 1em;
+        font-size: 4em;
+      }
+
+      #myfile{
+        font-size: 25px;
+      }
+
+      #submit{
+        font-size: 25px;
+      }
+  </style>
+
+{% endblock %}
