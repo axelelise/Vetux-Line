@@ -2,8 +2,6 @@
 
 namespace App\Service;
 
-use Psr\Log\LoggerInterface;
-
 class Convertisseur
 {
 
@@ -19,4 +17,23 @@ class Convertisseur
         
         return $csv;
     }
+
+    public function age($dateMauvaisFormat) { 
+        $date = explode("/", $dateMauvaisFormat);
+            if(count($date)<=2){
+                $age=0;
+                return $age;
+            }
+        $dateBonFormat = $date[2]."-".$date[1]."-".$date[0];
+        //var_dump($dateBonFormat);
+        $date = explode("-", $dateBonFormat);
+        $age = date('Y') - $date[0]; 
+        if (date('m') < $date[2]) { 
+           $age--;
+        } 
+        elseif(date('d') < $date[1]){
+            $age--;
+        }
+       return $age; 
+   } 
 }

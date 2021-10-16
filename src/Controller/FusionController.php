@@ -44,13 +44,13 @@ class FusionController extends AbstractController
      * @Route("/test/{choixMelange}", name="test")
      */
 
-    public function csvToArrays(Convertisseur $csv, $choixMelange) 
+    public function csvToArrays(Convertisseur $convertisseur, $choixMelange) 
     {
         $file = "../src/miniFrGer/small-french-client.csv";
-        $tab1 = $csv->csvToArray($file);
+        $tab1 = $convertisseur->csvToArray($file);
         
         $file = "../src/miniFrGer/small-german-client.csv";
-        $tab2 = $csv->csvToArray($file);
+        $tab2 = $convertisseur->csvToArray($file);
 
         /**
          * Recuperer le type de melange 
@@ -90,6 +90,16 @@ class FusionController extends AbstractController
         else{
             return $this->redirectToRoute('index');
         }
+
+        for($i=0; $i<count($tab3);$i++){
+
+            $age = $convertisseur->age($tab3[$i]["Birthday"]);
+            
+            if($age < 18){
+                unset($tab3[$i]);
+            }
+
+        }    
 
         return $this->render('Mission 1/tableau.html.twig', [
             'tab3' => $tab3
