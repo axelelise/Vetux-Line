@@ -33,11 +33,7 @@ class FusionController extends AbstractController
         ]);
     }
 
-    function Convertisseur($taille_inch){
-        $Resultat = $taille_inch * 2.54;
-        echo($Resultat);
-        return $Resultat;
-    }
+    
 
     
     /**
@@ -99,7 +95,11 @@ class FusionController extends AbstractController
                 unset($tab3[$i]);
             }
 
-        }    
+            elseif($tab3[$i]["FeetInches"]!= $convertisseur->cmToFeet($tab3[$i]["Centimeters"])){
+                unset($tab3[$i]);
+            }
+            
+        }   
 
         return $this->render('Mission 1/tableau.html.twig', [
             'tab3' => $tab3

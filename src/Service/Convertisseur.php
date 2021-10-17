@@ -36,4 +36,13 @@ class Convertisseur
         }
        return $age; 
    } 
+
+    public function cmToFeet($cm)
+    {
+         $inches = $cm/2.54;
+         $feet = intval($inches/12);
+         $inches = $inches%12;
+         return sprintf('%d&#039 %d&quot;', $feet, $inches);
+    }
+    
 }
