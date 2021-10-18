@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Service\Convertisseur;
+use App\Service\Fusion;
 
 class FusionController extends AbstractController
 {
@@ -40,13 +41,13 @@ class FusionController extends AbstractController
      * @Route("/test/{choixMelange}", name="test")
      */
 
-    public function csvToArrays(Convertisseur $convertisseur, $choixMelange) 
+    public function csvToArrays(Convertisseur $convertisseur, $choixMelange, Fusion $fusion) 
     {
-        $file = "../src/miniFrGer/small-french-client.csv";
+        /* $file = "../src/miniFrGer/small-french-client.csv";
         $tab1 = $convertisseur->csvToArray($file);
         
         $file = "../src/miniFrGer/small-german-client.csv";
-        $tab2 = $convertisseur->csvToArray($file);
+        $tab2 = $convertisseur->csvToArray($file); */
 
         /**
          * Recuperer le type de melange 
@@ -55,7 +56,7 @@ class FusionController extends AbstractController
          * Revoyer le tab3 dans l'affichage pour valider 
          */
 
-        if($choixMelange === "Entrelacé"){
+        /* if($choixMelange === "Entrelacé"){
             
             $logueurMax = 0;
             if(count($tab1)>count($tab2)){
@@ -119,15 +120,21 @@ class FusionController extends AbstractController
             
             else{
                 $cbUtiliser [] = $tab3[$i]["CCNumber"];
-            }
-            
+            }  
+        }    */
 
-            
-        }   
-
+        $file1 = "../src/miniFrGer/small-french-client.csv";
         
+        $file2 = "../src/miniFrGer/small-german-client.csv";
+
+        $tableauMelanger = $fusion->fusion($file1, $file2, $choixMelange, $convertisseur);
+
+        $tableauUniquementColonneBesoin = $fusion->projection($tableauMelanger);
+
+        $tableauTrier = $fusion->selection($tableauUniquementColonneBesoin, $convertisseur);
+
         return $this->render('Mission 1/tableau.html.twig', [
-            'tab3' => $tab3
+            'tableau' => $tableauTrier
         ]);
     }
 
