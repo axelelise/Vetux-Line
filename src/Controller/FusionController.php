@@ -87,10 +87,21 @@ class FusionController extends AbstractController
             return $this->redirectToRoute('index');
         }
 
-        $j=0;
         $longueurTab3 = count($tab3);
 
+        $colonneUtiliser = ["Gender","Title","GivenName","Surname","EmailAddress","Birthday","TelephoneNumber","CCType","CCNumber","CVV2","CCExpires","StreetAddress","City","StateFull","ZipCode","CountryFull","FeetInches","Centimeters","Pounds","Vehicle","Latitude","Longitude"];
+        $cbUtiliser = [];
+
         for($i=0; $i<$longueurTab3;$i++){
+
+            foreach($tab3[$i] as $key => $value){
+                if(in_array($key,$colonneUtiliser)){
+
+                }
+                else{
+                    unset($tab3[$i][$key]);
+                }
+            }
 
             $age = $convertisseur->age($tab3[$i]["Birthday"]);
             
@@ -102,10 +113,19 @@ class FusionController extends AbstractController
                 unset($tab3[$i]);
             }
 
-            $j++;
+            elseif(in_array($tab3[$i]["CCNumber"], $cbUtiliser)){
+                unset($tab3[$i]);
+            }
+            
+            else{
+                $cbUtiliser [] = $tab3[$i]["CCNumber"];
+            }
+            
+
             
         }   
-        var_dump($j);
+
+        
         return $this->render('Mission 1/tableau.html.twig', [
             'tab3' => $tab3
         ]);
