@@ -87,7 +87,10 @@ class FusionController extends AbstractController
             return $this->redirectToRoute('index');
         }
 
-        for($i=0; $i<count($tab3);$i++){
+        $j=0;
+        $longueurTab3 = count($tab3);
+
+        for($i=0; $i<$longueurTab3;$i++){
 
             $age = $convertisseur->age($tab3[$i]["Birthday"]);
             
@@ -98,9 +101,11 @@ class FusionController extends AbstractController
             elseif($tab3[$i]["FeetInches"]!= $convertisseur->cmToFeet($tab3[$i]["Centimeters"])){
                 unset($tab3[$i]);
             }
+
+            $j++;
             
         }   
-
+        var_dump($j);
         return $this->render('Mission 1/tableau.html.twig', [
             'tab3' => $tab3
         ]);
