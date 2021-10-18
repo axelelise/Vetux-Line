@@ -20,7 +20,7 @@ class Marque
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $nom;
+    private $Nom;
 
     public function getId(): ?int
     {
@@ -29,12 +29,12 @@ class Marque
 
     public function getNom(): ?string
     {
-        return $this->nom;
+        return $this->Nom;
     }
 
-    public function setNom(string $nom): self
+    public function setNom(string $Nom): self
     {
-        $this->nom = $nom;
+        $this->Nom = $Nom;
 
         return $this;
     }

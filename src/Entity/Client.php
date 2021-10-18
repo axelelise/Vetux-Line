@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity\Clients;
+namespace App\Entity;
 
 use App\Repository\ClientRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -25,27 +25,32 @@ class Client
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $titre;
+    private $Titre;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $nom;
+    private $Nom;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $prénom;
-
-    /**
-     * @ORM\Column(type="date")
-     */
-    private $dateDeNaissance;
+    private $Prenom;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $numeroTel;
+    private $Email;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $DateDeNaissance;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $NumTel;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -53,12 +58,12 @@ class Client
     private $CCType;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", length=255)
      */
     private $CCNumber;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", length=255)
      */
     private $CVV2;
 
@@ -70,27 +75,52 @@ class Client
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $adressePhysique;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $taille;
-
-    /**
-     * @ORM\Column(type="float")
-     */
-    private $poids;
+    private $AdressePhysique;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $vehicule;
+    private $City;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $coordonnéesGPS;
+    private $State;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $CodePostal;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $Region;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $Taille;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $Poids;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $Véhicule;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $Latitude;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $Longitude;
 
     public function getId(): ?int
     {
@@ -111,60 +141,72 @@ class Client
 
     public function getTitre(): ?string
     {
-        return $this->titre;
+        return $this->Titre;
     }
 
-    public function setTitre(string $titre): self
+    public function setTitre(string $Titre): self
     {
-        $this->titre = $titre;
+        $this->Titre = $Titre;
 
         return $this;
     }
 
     public function getNom(): ?string
     {
-        return $this->nom;
+        return $this->Nom;
     }
 
-    public function setNom(string $nom): self
+    public function setNom(string $Nom): self
     {
-        $this->nom = $nom;
+        $this->Nom = $Nom;
 
         return $this;
     }
 
-    public function getPrénom(): ?string
+    public function getPrenom(): ?string
     {
-        return $this->prénom;
+        return $this->Prenom;
     }
 
-    public function setPrénom(string $prénom): self
+    public function setPrenom(string $Prenom): self
     {
-        $this->prénom = $prénom;
+        $this->Prenom = $Prenom;
 
         return $this;
     }
 
-    public function getDateDeNaissance(): ?\DateTimeInterface
+    public function getEmail(): ?string
     {
-        return $this->dateDeNaissance;
+        return $this->Email;
     }
 
-    public function setDateDeNaissance(\DateTimeInterface $dateDeNaissance): self
+    public function setEmail(string $Email): self
     {
-        $this->dateDeNaissance = $dateDeNaissance;
+        $this->Email = $Email;
 
         return $this;
     }
 
-    public function getNumeroTel(): ?string
+    public function getDateDeNaissance(): ?string
     {
-        return $this->numeroTel;
+        return $this->DateDeNaissance;
     }
 
-    public function setNumeroTel(string $numeroTel): self
+    public function setDateDeNaissance(string $DateDeNaissance): self
     {
-        $this->numeroTel = $numeroTel;
+        $this->DateDeNaissance = $DateDeNaissance;
+
+        return $this;
+    }
+
+    public function getNumTel(): ?string
+    {
+        return $this->NumTel;
+    }
+
+    public function setNumTel(string $NumTel): self
+    {
+        $this->NumTel = $NumTel;
 
         return $this;
     }
@@ -181,24 +223,24 @@ class Client
         return $this;
     }
 
-    public function getCCNumber(): ?int
+    public function getCCNumber(): ?string
     {
         return $this->CCNumber;
     }
 
-    public function setCCNumber(int $CCNumber): self
+    public function setCCNumber(string $CCNumber): self
     {
         $this->CCNumber = $CCNumber;
 
         return $this;
     }
 
-    public function getCVV2(): ?int
+    public function getCVV2(): ?string
     {
         return $this->CVV2;
     }
 
-    public function setCVV2(int $CVV2): self
+    public function setCVV2(string $CVV2): self
     {
         $this->CVV2 = $CVV2;
 
@@ -219,60 +261,120 @@ class Client
 
     public function getAdressePhysique(): ?string
     {
-        return $this->adressePhysique;
+        return $this->AdressePhysique;
     }
 
-    public function setAdressePhysique(string $adressePhysique): self
+    public function setAdressePhysique(string $AdressePhysique): self
     {
-        $this->adressePhysique = $adressePhysique;
+        $this->AdressePhysique = $AdressePhysique;
 
         return $this;
     }
 
-    public function getTaille(): ?int
+    public function getCity(): ?string
     {
-        return $this->taille;
+        return $this->City;
     }
 
-    public function setTaille(int $taille): self
+    public function setCity(string $City): self
     {
-        $this->taille = $taille;
+        $this->City = $City;
 
         return $this;
     }
 
-    public function getPoids(): ?float
+    public function getState(): ?string
     {
-        return $this->poids;
+        return $this->State;
     }
 
-    public function setPoids(float $poids): self
+    public function setState(string $State): self
     {
-        $this->poids = $poids;
+        $this->State = $State;
 
         return $this;
     }
 
-    public function getVehicule(): ?string
+    public function getCodePostal(): ?string
     {
-        return $this->vehicule;
+        return $this->CodePostal;
     }
 
-    public function setVehicule(string $vehicule): self
+    public function setCodePostal(string $CodePostal): self
     {
-        $this->vehicule = $vehicule;
+        $this->CodePostal = $CodePostal;
 
         return $this;
     }
 
-    public function getCoordonnéesGPS(): ?string
+    public function getRegion(): ?string
     {
-        return $this->coordonnéesGPS;
+        return $this->Region;
     }
 
-    public function setCoordonnéesGPS(string $coordonnéesGPS): self
+    public function setRegion(string $Region): self
     {
-        $this->coordonnéesGPS = $coordonnéesGPS;
+        $this->Region = $Region;
+
+        return $this;
+    }
+
+    public function getTaille(): ?string
+    {
+        return $this->Taille;
+    }
+
+    public function setTaille(string $Taille): self
+    {
+        $this->Taille = $Taille;
+
+        return $this;
+    }
+
+    public function getPoids(): ?string
+    {
+        return $this->Poids;
+    }
+
+    public function setPoids(string $Poids): self
+    {
+        $this->Poids = $Poids;
+
+        return $this;
+    }
+
+    public function getVéhicule(): ?string
+    {
+        return $this->Véhicule;
+    }
+
+    public function setVéhicule(string $Véhicule): self
+    {
+        $this->Véhicule = $Véhicule;
+
+        return $this;
+    }
+
+    public function getLatitude(): ?string
+    {
+        return $this->Latitude;
+    }
+
+    public function setLatitude(string $Latitude): self
+    {
+        $this->Latitude = $Latitude;
+
+        return $this;
+    }
+
+    public function getLongitude(): ?string
+    {
+        return $this->Longitude;
+    }
+
+    public function setLongitude(string $Longitude): self
+    {
+        $this->Longitude = $Longitude;
 
         return $this;
     }
