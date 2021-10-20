@@ -7,7 +7,7 @@
 <h1>Tableau 3</h1>
 <ul>
     {% for tableau in tableau %}
-        <li>{{ tableau.FeetInches|e }}</li>
+        <li>{{ tableau.CountryFull|e }}</li>
     {% endfor %}
     <li>Nombre de ligne : {{tableau|length}}</li>
 </ul>
