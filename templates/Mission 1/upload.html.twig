@@ -4,12 +4,12 @@
 
 {% block body %}
 
-  <form action="/index" method="post" enctype="multipart/form-data">
+  <form action="{{ path('do-upload') }}" method="post" enctype="multipart/form-data">
 
         <input type="hidden" name="token" value="{{ csrf_token('upload') }}" />
 
         <div id="titre">
-            <label for="myfile">Importer vos fichier:</label>
+            <label for="myfile">Importer vos fichiers :</label>
         </div>
 
         <div id="import1">
@@ -27,23 +27,20 @@
   </form>
 
   <style>
-      #titre{
+      #titre label{
         text-decoration: underline;
-        margin-top:2em;
+        margin-top:3em;
         font-size: 50px;
-        margin-left : 1em;
-        margin-bottom: 0.5em;
+        margin-bottom: 1.5em;
       }
 
       #import1,#import2{
-        margin-left : 3em;
-        font-size: 4em;
+        margin-left : 9em;
+        margin-bottom: 2em;
       }
 
-      #bouton{
-        margin-top:2%;
-        margin-left : 1em;
-        font-size: 4em;
+      #bouton button{
+        margin-top: 1em;
       }
 
       #myfile{

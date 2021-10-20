@@ -50,7 +50,6 @@ class UploadController extends AbstractController
         $filename2 = $file2->getClientOriginalName();
         $uploader->upload('../src/miniFrGer/', $file2, $filename2);
 
-        return new Response("File uploaded",  Response::HTTP_OK,
-            ['content-type' => 'text/plain']);
+        return $this->redirectToRoute('index');
     }
 }
