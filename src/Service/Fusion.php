@@ -5,13 +5,12 @@ use App\Service\Convertisseur;
 
 class Fusion
 {
-    public static function fusion($file1, $file2, $typeMelange){
-
-        $tab1 = Convertisseur::csvToArray($file1);
-        $tab2 = Convertisseur::csvToArray($file2);
+    public function fusion($file1, $file2, $typeMelange, Convertisseur $convertisseur){
+        $tab1 = $convertisseur->csvToArray($file1);
+        $tab2 = $convertisseur->csvToArray($file2);
 
         if($typeMelange === "Entrelacé"){
-
+            
             $logueurMax = 0;
             if(count($tab1)>count($tab2)){
                 $logueurMax = count($tab1);

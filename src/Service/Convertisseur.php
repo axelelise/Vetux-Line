@@ -5,7 +5,7 @@ namespace App\Service;
 class Convertisseur
 {
 
-    public static function csvToArray($file)
+    public function csvToArray($file) 
     {
         //$file = "../src/miniFrGer/small-french-client.csv";
         $csv = array_map('str_getcsv', file($file));
