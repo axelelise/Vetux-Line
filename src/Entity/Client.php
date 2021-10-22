@@ -25,102 +25,109 @@ class Client
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Titre;
+    private $titre;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Nom;
+    private $nom;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Prenom;
+    private $prenom;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Email;
+    private $email;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $DateDeNaissance;
+    private $dateDeNaissance;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $NumTel;
+    private $numTel;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $CCType;
+    private $cCType;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $CCNumber;
+    private $cCNumber;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $CVV2;
+    private $cVV2;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $CCExpires;
+    private $cCExpires;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $AdressePhysique;
+    private $adressePhysique;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $City;
+    private $city;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $State;
+    private $state;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $CodePostal;
+    private $codePostal;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Region;
+    private $region;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Taille;
+    private $feetInches;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Poids;
+    private $taille;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Véhicule;
+    private $poids;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Client", inversedBy="App\Entity\Vehicule")
+     * @ORM\JoinColumn(name="id_vehicule", referencedColumnName="id")
+     */
+    private $id_vehicule;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Latitude;
+    private $latitude;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Longitude;
+    private $longitude;
 
     public function getId(): ?int
     {
@@ -141,240 +148,252 @@ class Client
 
     public function getTitre(): ?string
     {
-        return $this->Titre;
+        return $this->titre;
     }
 
-    public function setTitre(string $Titre): self
+    public function setTitre(string $titre): self
     {
-        $this->Titre = $Titre;
+        $this->titre = $titre;
 
         return $this;
     }
 
     public function getNom(): ?string
     {
-        return $this->Nom;
+        return $this->nom;
     }
 
-    public function setNom(string $Nom): self
+    public function setNom(string $nom): self
     {
-        $this->Nom = $Nom;
+        $this->nom = $nom;
 
         return $this;
     }
 
     public function getPrenom(): ?string
     {
-        return $this->Prenom;
+        return $this->prenom;
     }
 
-    public function setPrenom(string $Prenom): self
+    public function setPrenom(string $prenom): self
     {
-        $this->Prenom = $Prenom;
+        $this->prenom = $prenom;
 
         return $this;
     }
 
     public function getEmail(): ?string
     {
-        return $this->Email;
+        return $this->email;
     }
 
-    public function setEmail(string $Email): self
+    public function setEmail(string $email): self
     {
-        $this->Email = $Email;
+        $this->email = $email;
 
         return $this;
     }
 
     public function getDateDeNaissance(): ?string
     {
-        return $this->DateDeNaissance;
+        return $this->dateDeNaissance;
     }
 
-    public function setDateDeNaissance(string $DateDeNaissance): self
+    public function setDateDeNaissance(string $dateDeNaissance): self
     {
-        $this->DateDeNaissance = $DateDeNaissance;
+        $this->dateDeNaissance = $dateDeNaissance;
 
         return $this;
     }
 
     public function getNumTel(): ?string
     {
-        return $this->NumTel;
+        return $this->numTel;
     }
 
-    public function setNumTel(string $NumTel): self
+    public function setNumTel(string $numTel): self
     {
-        $this->NumTel = $NumTel;
+        $this->numTel = $numTel;
 
         return $this;
     }
 
     public function getCCType(): ?string
     {
-        return $this->CCType;
+        return $this->cCType;
     }
 
-    public function setCCType(string $CCType): self
+    public function setCCType(string $cCType): self
     {
-        $this->CCType = $CCType;
+        $this->cCType = $cCType;
 
         return $this;
     }
 
     public function getCCNumber(): ?string
     {
-        return $this->CCNumber;
+        return $this->cCNumber;
     }
 
-    public function setCCNumber(string $CCNumber): self
+    public function setCCNumber(string $cCNumber): self
     {
-        $this->CCNumber = $CCNumber;
+        $this->cCNumber = $cCNumber;
 
         return $this;
     }
 
     public function getCVV2(): ?string
     {
-        return $this->CVV2;
+        return $this->cVV2;
     }
 
-    public function setCVV2(string $CVV2): self
+    public function setCVV2(string $cVV2): self
     {
-        $this->CVV2 = $CVV2;
+        $this->cVV2 = $cVV2;
 
         return $this;
     }
 
     public function getCCExpires(): ?string
     {
-        return $this->CCExpires;
+        return $this->cCExpires;
     }
 
-    public function setCCExpires(string $CCExpires): self
+    public function setCCExpires(string $cCExpires): self
     {
-        $this->CCExpires = $CCExpires;
+        $this->cCExpires = $cCExpires;
 
         return $this;
     }
 
     public function getAdressePhysique(): ?string
     {
-        return $this->AdressePhysique;
+        return $this->adressePhysique;
     }
 
-    public function setAdressePhysique(string $AdressePhysique): self
+    public function setAdressePhysique(string $adressePhysique): self
     {
-        $this->AdressePhysique = $AdressePhysique;
+        $this->adressePhysique = $adressePhysique;
 
         return $this;
     }
 
     public function getCity(): ?string
     {
-        return $this->City;
+        return $this->city;
     }
 
-    public function setCity(string $City): self
+    public function setCity(string $city): self
     {
-        $this->City = $City;
+        $this->city = $city;
 
         return $this;
     }
 
     public function getState(): ?string
     {
-        return $this->State;
+        return $this->state;
     }
 
-    public function setState(string $State): self
+    public function setState(string $state): self
     {
-        $this->State = $State;
+        $this->state = $state;
 
         return $this;
     }
 
     public function getCodePostal(): ?string
     {
-        return $this->CodePostal;
+        return $this->codePostal;
     }
 
-    public function setCodePostal(string $CodePostal): self
+    public function setCodePostal(string $codePostal): self
     {
-        $this->CodePostal = $CodePostal;
+        $this->codePostal = $codePostal;
 
         return $this;
     }
 
     public function getRegion(): ?string
     {
-        return $this->Region;
+        return $this->region;
     }
 
-    public function setRegion(string $Region): self
+    public function setRegion(string $region): self
     {
-        $this->Region = $Region;
+        $this->region = $region;
+
+        return $this;
+    }
+
+    public function getFeetInches(): ?string
+    {
+        return $this->feetInches;
+    }
+
+    public function setFeetInches(string $feetInches): self
+    {
+        $this->feetInches = $feetInches;
 
         return $this;
     }
 
     public function getTaille(): ?string
     {
-        return $this->Taille;
+        return $this->taille;
     }
 
-    public function setTaille(string $Taille): self
+    public function setTaille(string $taille): self
     {
-        $this->Taille = $Taille;
+        $this->taille = $taille;
 
         return $this;
     }
 
     public function getPoids(): ?string
     {
-        return $this->Poids;
+        return $this->poids;
     }
 
-    public function setPoids(string $Poids): self
+    public function setPoids(string $poids): self
     {
-        $this->Poids = $Poids;
+        $this->poids = $poids;
 
         return $this;
     }
 
-    public function getVéhicule(): ?string
+    public function getId_vehicule(): ?int
     {
-        return $this->Véhicule;
+        return $this->id_vehicule;
     }
 
-    public function setVéhicule(string $Véhicule): self
+    public function setId_vehicule(int $id_vehicule): self
     {
-        $this->Véhicule = $Véhicule;
+        $this->id_vehicule = $id_vehicule;
 
         return $this;
     }
 
     public function getLatitude(): ?string
     {
-        return $this->Latitude;
+        return $this->latitude;
     }
 
-    public function setLatitude(string $Latitude): self
+    public function setLatitude(string $latitude): self
     {
-        $this->Latitude = $Latitude;
+        $this->latitude = $latitude;
 
         return $this;
     }
 
     public function getLongitude(): ?string
     {
-        return $this->Longitude;
+        return $this->longitude;
     }
 
-    public function setLongitude(string $Longitude): self
+    public function setLongitude(string $longitude): self
     {
-        $this->Longitude = $Longitude;
+        $this->longitude = $longitude;
 
         return $this;
     }

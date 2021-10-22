@@ -27,6 +27,13 @@ class Vehicule
      */
     private $annee;
 
+    /**
+     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Vehicule", inversedBy="App\Entity\Marque")
+     * @ORM\JoinColumn(name="id_marque", referencedColumnName="id")
+     */
+    private $id_marque;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -52,6 +59,18 @@ class Vehicule
     public function setAnnee(int $annee): self
     {
         $this->annee = $annee;
+
+        return $this;
+    }
+
+    public function getId_marque(): ?int
+    {
+        return $this->id_marque;
+    }
+
+    public function setId_marque(int $id_marque): self
+    {
+        $this->id_marque = $id_marque;
 
         return $this;
     }
