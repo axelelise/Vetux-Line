@@ -17,7 +17,7 @@ class FusionController extends AbstractController
      */
     public function index1(Request $request): Response
     {
-
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $form = $this->createForm(FormMelangeType::class);
         
         
@@ -43,6 +43,7 @@ class FusionController extends AbstractController
 
     public function csvToArrays(Convertisseur $convertisseur, $choixMelange, Fusion $fusion) 
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
 
         $file1 = "../src/miniFrGer/small-french-client.csv";
         
@@ -64,6 +65,7 @@ class FusionController extends AbstractController
      */
     public function index()
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
         return $this->render('Mission 1/upload.html.twig');
     }
 }
