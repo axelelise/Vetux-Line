@@ -8,7 +8,13 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 class NavigationController extends AbstractController
 {
-    
+    /**
+     * @Route("/", name="first")
+     */
+    public function firstPage()
+    {
+        return $this->redirectToRoute('app_login');
+    }
 
     /**
      * @Route("/membre", name="membre")
