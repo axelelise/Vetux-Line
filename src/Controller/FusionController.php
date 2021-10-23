@@ -9,142 +9,102 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Service\Convertisseur;
 use App\Service\Fusion;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class FusionController extends AbstractController
 {
-    /**
-     * @Route("/index", name="index")
-     */
-    public function index1(Request $request): Response
+
+    private $requestStack;
+
+    public function __construct(RequestStack $requestStack)
     {
+        $this->requestStack = $requestStack;
+    }
+
+    /**
+     * Controller pour Upload
+     *
+     * @Route("/upload", name="upload")
+     */
+    public function upload()
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+        return $this->render('Fusion/upload.html.twig');
+    }
+
+    /**
+     * Formulaire concernant le type de mélange.
+     *
+     * @Route("/choix", name="choix")
+     */
+    public function choix(Request $request): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
 
         $form = $this->createForm(FormMelangeType::class);
-        
-        
         $form->handleRequest($request);
+
         if($form->isSubmitted()){
             
             $choix = $form["type"]->getData();
 
-            return $this->redirectToRoute('test',['choixMelange' => $choix,]);
+            return $this->redirectToRoute('fusion',['choixMelange' => $choix,]);
         }
 
-        return $this->render('Mission 1/index.html.twig', [
+        return $this->render('Fusion/formulaire_choix.html.twig', [
             'form' => $form->createView()
         ]);
     }
 
     
-
-    
     /**
-     * @Route("/test/{choixMelange}", name="test")
+     * Fusionne les 2 fichier importer et les places dans un fichier appart
+     *
+     * @Route("/fusion/{choixMelange}", name="fusion")
      */
 
-    public function csvToArrays(Convertisseur $convertisseur, $choixMelange, Fusion $fusion) 
+    public function fusion(Convertisseur $convertisseur, $choixMelange, Fusion $fusion)
     {
-        /* $file = "../src/miniFrGer/small-french-client.csv";
-        $tab1 = $convertisseur->csvToArray($file);
-        
-        $file = "../src/miniFrGer/small-german-client.csv";
-        $tab2 = $convertisseur->csvToArray($file); */
+        $this->denyAccessUnlessGranted('ROLE_USER');
 
-        /**
-         * Recuperer le type de melange 
-         * Faire les melanges selon l'utilisateur
-         * Creer le tab3 
-         * Revoyer le tab3 dans l'affichage pour valider 
-         */
+        // Lancement de la session
+        $session = $this->requestStack->getSession();
 
-        /* if($choixMelange === "Entrelacé"){
-            
-            $logueurMax = 0;
-            if(count($tab1)>count($tab2)){
-                $logueurMax = count($tab1);
-            }
-            else{
-                $logueurMax = count($tab2);
-            }
+        // Recuperation des noms de fichier stocker dans la session lors de upload
+        $file1 = $session->get('fichier1');
+        $file2 = $session->get('fichier2');
 
-            for($i=0; $i<$logueurMax; $i++){
-                if($i < count($tab1)){
-                    $tab3[] = $tab1[$i]; 
-                }
-                if($i < count($tab2)){
-                    $tab3[] = $tab2[$i]; 
-                }
-            }
+        // La fonction fusion supprime les colonnes inutiles, fait un trie
+        // et renvoi un tableau associatif contenant les 2 fichiers mélangé
+        $tableauMelangerEtTrier = $fusion->fusion($file1, $file2, $choixMelange);
 
-        }
-        elseif($choixMelange === "Séquentiel"){
-            for($i=0;$i<count($tab1);$i++){
-                $tab3[] = $tab1[$i];
-            }
-            for($i=0;$i<count($tab2);$i++){
-                $tab3[] = $tab2[$i];
-            }
-        }
-        else{
-            return $this->redirectToRoute('index');
+        // Ont replace le contenu de notre tableau associatif dans un autre tableau pour eviter les
+        // clées vide a cause du trie ( [0]=> , [1]=> ["pays"] => "France")
+        foreach ($tableauMelangerEtTrier as $tab){
+            $tableauFini [] = $tab;
         }
 
-        $longueurTab3 = count($tab3);
+        // Initalise un fichier Csv depuis notre tableau associatif
+        Convertisseur::arrayToCsv($tableauFini, '../src/Fichiers_CSV/french_german_client.csv');
 
-        $colonneUtiliser = ["Gender","Title","GivenName","Surname","EmailAddress","Birthday","TelephoneNumber","CCType","CCNumber","CVV2","CCExpires","StreetAddress","City","StateFull","ZipCode","CountryFull","FeetInches","Centimeters","Pounds","Vehicle","Latitude","Longitude"];
-        $cbUtiliser = [];
 
-        for($i=0; $i<$longueurTab3;$i++){
-
-            foreach($tab3[$i] as $key => $value){
-                if(in_array($key,$colonneUtiliser)){
-
-                }
-                else{
-                    unset($tab3[$i][$key]);
-                }
-            }
-
-            $age = $convertisseur->age($tab3[$i]["Birthday"]);
-            
-            if($age < 18){
-                unset($tab3[$i]);
-            }
-
-            elseif($tab3[$i]["FeetInches"]!= $convertisseur->cmToFeet($tab3[$i]["Centimeters"])){
-                unset($tab3[$i]);
-            }
-
-            elseif(in_array($tab3[$i]["CCNumber"], $cbUtiliser)){
-                unset($tab3[$i]);
-            }
-            
-            else{
-                $cbUtiliser [] = $tab3[$i]["CCNumber"];
-            }  
-        }    */
-
-        $file1 = "../src/miniFrGer/small-french-client.csv";
-        
-        $file2 = "../src/miniFrGer/small-german-client.csv";
-
-        $tableauMelanger = $fusion->fusion($file1, $file2, $choixMelange, $convertisseur);
-
-        $tableauUniquementColonneBesoin = $fusion->projection($tableauMelanger);
-
-        $tableauTrier = $fusion->selection($tableauUniquementColonneBesoin, $convertisseur);
-
-        return $this->render('Mission 1/tableau.html.twig', [
-            'tableau' => $tableauTrier
-        ]);
+        return $this->render('Fusion/download.html.twig');
     }
 
     /**
-     * @Route("/", name="home")
-     */
-    public function index()
-    {
-        return $this->render('Mission 1/upload.html.twig');
+     * Permet à l'utilisateur de télécharger le fichier csv qui comprend la fusion
+     * des 2 fichiers importés
+     *
+     * @Route("/download", name="download_file")
+     **/
+    public function downloadFileAction(){
+        $response = new BinaryFileResponse('../src/Fichiers_CSV/french_german_client.csv');
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT,'french-german-client_'.date('d-m-Y').'.csv');
+        return $response;
     }
+
 }
 
 ?> 

@@ -8,9 +8,17 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Service\FileUploader;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class UploadController extends AbstractController
 {
+    private $requestStack;
+
+    public function __construct(RequestStack $requestStack)
+    {
+        $this->requestStack = $requestStack;
+    }
+
     /**
      * @Route("/doUpload", name="do-upload")
      * @param Request $request
@@ -21,19 +29,9 @@ class UploadController extends AbstractController
     public function index(Request $request, 
                       FileUploader $uploader, LoggerInterface $logger): Response
     {
-        $token = $request->get("token");
 
-        if (!$this->isCsrfTokenValid('upload', $token))
-        {
-            $logger->info("CSRF failure");
-
-            return new Response("Operation not allowed",  Response::HTTP_BAD_REQUEST,
-                ['content-type' => 'text/plain']);
-        }
 
         $file = $request->files->get('myfile');
-        
-
         $file2 = $request->files->get('myfile2');
 
     
@@ -45,11 +43,15 @@ class UploadController extends AbstractController
         }
 
         $filename = $file->getClientOriginalName();
-        $uploader->upload('../src/miniFrGer/', $file, $filename);
+        $uploader->upload('../src/Fichiers_CSV/', $file, $filename);
 
         $filename2 = $file2->getClientOriginalName();
-        $uploader->upload('../src/miniFrGer/', $file2, $filename2);
+        $uploader->upload('../src/Fichiers_CSV/', $file2, $filename2);
 
-        return $this->redirectToRoute('index');
+        $session = $this->requestStack->getSession();
+        $session->set('fichier1', '../src/Fichiers_CSV/'.$filename);
+        $session->set('fichier2', '../src/Fichiers_CSV/'.$filename2);
+
+        return $this->redirectToRoute('choix');
     }
 }

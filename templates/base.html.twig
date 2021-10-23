@@ -10,7 +10,7 @@
 </head>
 <body>
 <nav class="navbar navbar-light bg-light">
-    <a class="navbar-brand" href="{{ path('home') }}">Accueil</a>
+    <a class="navbar-brand" href="{{ path('upload') }}">Accueil</a>
     {% if app.user %}
         <a class="btn btn-outline-info" href="{{ path('membre') }}">Page membre</a>
         {% if is_granted('ROLE_ADMIN') %}

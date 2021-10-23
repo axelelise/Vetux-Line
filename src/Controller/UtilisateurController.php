@@ -26,7 +26,7 @@ class UtilisateurController extends AbstractController
 
       $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
-      return $this->render('utilisateur/index.html.twig', [
+      return $this->render('utilisateur/formulaire_choix.html.twig', [
                 'utilisateurs' => $utilisateurRepository->findAll(),
             ]);
 
@@ -77,7 +77,7 @@ class UtilisateurController extends AbstractController
           'utilisateur' => $utilisateur,
         ]);
       }
-      return $this->redirectToRoute("home");
+      return $this->redirectToRoute("upload");
     }
 
     /**

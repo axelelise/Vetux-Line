@@ -5,12 +5,41 @@ use App\Service\Convertisseur;
 
 class Fusion
 {
-    public function fusion($file1, $file2, $typeMelange, Convertisseur $convertisseur){
-        $tab1 = $convertisseur->csvToArray($file1);
-        $tab2 = $convertisseur->csvToArray($file2);
+    /**
+     * @param $file1 string Fichier 1 importé par l'utilisateur
+     * @param $file2 string Fichier 2 importé par l'utilisateur
+     * @param $typeMelange string Choix du mélange (Entrelacé ou Séquentiel)
+     * @return array
+     */
 
+    public static function fusion($file1, $file2, $typeMelange){
+
+        // Convertie le fichier en tableau associatif
+        $tab = Convertisseur::csvToArray($file1);
+
+        // Supprime les colonnes inutiles
+        $tab = self::projection($tab);
+
+        // Trie les données
+        $tab = self::selection($tab);
+
+        // Ont replace le contenu de notre tableau associatif dans un autre tableau pour éviter les
+        // clées vide a cause du trie ( [0]=> , [1]=> ["pays"] => "France")
+        foreach ($tab as $tab){
+            $tab1 [] = $tab;
+        }
+
+        $tab = Convertisseur::csvToArray($file2);
+        $tab = self::projection($tab);
+        $tab = self::selection($tab);
+
+        foreach ($tab as $tab){
+            $tab2 [] = $tab;
+        }
+
+        // Melange les valeurs des tableaux selon le choix de l'utilisateur
         if($typeMelange === "Entrelacé"){
-            
+
             $logueurMax = 0;
             if(count($tab1)>count($tab2)){
                 $logueurMax = count($tab1);
@@ -43,11 +72,12 @@ class Fusion
             return $tab3;
 
         }
-        else{
-            return "ERREUR";
-        }
-    } 
-    
+    }
+
+    /**
+     * @param $tab3 array
+     * @return array avec seulement les colonnes voulu
+     */
     public function projection ($tab3){
         
         $longueurTab3 = count($tab3);
@@ -68,20 +98,24 @@ class Fusion
 
         return $tab3;
     }
-    
-    public function selection($tab3, $convertisseur){
+
+    /**
+     * @param $tab3 array
+     * @return array trier
+     */
+    public function selection($tab3){
 
         $longueurTab3 = count($tab3);
         $cbUtiliser = [];
 
         for($i=0; $i<$longueurTab3;$i++){
-            $age = $convertisseur->age($tab3[$i]["Birthday"]);
+            $age = Convertisseur::age($tab3[$i]["Birthday"]);
             
             if($age < 18){
                 unset($tab3[$i]);
             }
 
-            elseif($tab3[$i]["FeetInches"]!= $convertisseur->cmToFeet($tab3[$i]["Centimeters"])){
+            elseif($tab3[$i]["FeetInches"]!= Convertisseur::cmToFeet($tab3[$i]["Centimeters"])){
                 unset($tab3[$i]);
             }
 
