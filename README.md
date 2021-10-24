@@ -17,11 +17,11 @@ Version de composer : 2.1.8
 * Adapter les informations du .env afin qu'il vous corresponde.  
 * Supprimer toute les anciennes migrations dans le dossier du même nom.  
 * Puis créer vos table complete a l'aide des 2 commandes suivante.  
-#####         
+#####   
+```bash
     php bin/console make:migration
     php bin/console doctrine:migrations:migrate 
-
-
+```
 ### Contexte 
 
 La société VETUX-LINE reçoit de la part de ses partenaires, tous les mois, 2 fichiers clients au format CSV.   
@@ -57,6 +57,8 @@ Afin de pouvoir repondre au besoin de l'utilisateur nous avons créer uploader.
 Il suffit à l'utilisateur de cliquer sur les boutons Browse et de sélectionner les fichiers CSV qu'il souhaite importer.  
 
 #### Explication du code
+
+```php
     public function upload(Request $request,
     FileUploader $uploader, LoggerInterface $logger): Response
     {
@@ -86,6 +88,7 @@ Il suffit à l'utilisateur de cliquer sur les boutons Browse et de sélectionner
 
         return $this->redirectToRoute('choix');
     }
+```
 
 ### Le Choix du Mélange 
 Une fois que l'utilisateur a importer ses fichiers correctement, celui ci est rediriger sur cette page.  
@@ -95,7 +98,7 @@ Ici comme demander dans le cahier des charges l'utilisateur peut choisir sont ty
 
 #### Explication du code
 
-
+```php
     public function choix(Request $request): Response
     {
          // On permet l'acces qu'au personne inscrit sur l'application
@@ -120,14 +123,14 @@ Ici comme demander dans le cahier des charges l'utilisateur peut choisir sont ty
           return $this->render('Fusion/formulaire_choix.html.twig', [
               'form' => $form->createView()
           ]);
-    }`
-
+    }
+```
 ### Fusion
 Maintenant que nous disposons des fichiers CSV importer par l'utilisateur, ainsi que du type de tri qu'il souhaite utiliser, nous allons pouvoir passer à la fusion.  
 Cette tâche s'execute en arrière plan, l'utilisateur n'a donc pas d'affichage pour voir la fusion s'executer 
 
 #### Explication du code 
-    
+```php 
     // src/Controller/FusionController.php
 
     public function fusion(Convertisseur $convertisseur, $choixMelange, Fusion $fusion)
@@ -158,9 +161,10 @@ Cette tâche s'execute en arrière plan, l'utilisateur n'a donc pas d'affichage 
 
         return $this->render('Fusion/download.html.twig');
     }
-
+```
 Ce code utilise la fonction fusion. Celle ci est très importante c'est pourquoi nous allons aussi expliquer sont fonctionnement.  
 
+```php
     // src/Service/Fusion.php
     
     public static function fusion($file1, $file2, $typeMelange){
@@ -224,13 +228,14 @@ Ce code utilise la fonction fusion. Celle ci est très importante c'est pourquoi
 
         }
     }
+```
 
 Cette fonction depend elle meme de 2 autres fonctions importante du projet
  * La fonction **selection** qui vas sélectioner seulement les colonnes du fichier csv qui nous intéresse.  
  * La fonction **trie** qui vas supprimer toute les lignes qui ne correspond pas au critère de l'utilisateur.  
 
 #### Fonction Selection :
-
+```php
     // src/Service/Fusion.php
 
     public function selection ($tab3){
@@ -259,9 +264,9 @@ Cette fonction depend elle meme de 2 autres fonctions importante du projet
 
         return $tab3;
     }
-
+```
 #### Fonction Trie :
-
+```php
     // src/Service/Fusion.php
 
     public function trie($tab3){
@@ -300,7 +305,7 @@ Cette fonction depend elle meme de 2 autres fonctions importante du projet
         return $tab3;
 
     }
-
+```
 ### Le Téléchargement 
 Lorsque l'utilisateur a fait le choix de sont type de fusion (Séquentiel ou Entrelacé), il sera rediriger sur la page Download. 
 Cette page est simple, il suffit a l'utilisateur de télécharger son fichier fusionner. 
@@ -310,7 +315,7 @@ Cette page est simple, il suffit a l'utilisateur de télécharger son fichier fu
 #### Explication du code 
     
 Le lien renvoi vers ce controlleur.
-
+```php
         // src/Controller/Fusion.php
 
         public function downloadFileAction(){
@@ -323,3 +328,4 @@ Le lien renvoi vers ce controlleur.
         
         return $response;
     }
+```
