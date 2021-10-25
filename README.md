@@ -45,9 +45,11 @@ Dans la première partie il nous ai demander de créer une application pour perm
 2. **ETL (Extract Transform Load)**  
 Dans la seconde partie, il nous ai demander d'obtenir ces données sous la forme d’une base de données relationnelle.
 
-## Mission 1 :  
+## Mission 1 :
 
-
+###Gestion des droits 
+* Seul l'administrateur a le droit d'inscrire de nouveau utilisateur.
+* Seul les personnes connecter ont le droit de consulter les pages de l'application. 
 ### Upload 
 Afin de pouvoir repondre au besoin de l'utilisateur nous avons créer uploader. 
 ####
@@ -306,6 +308,7 @@ Cette fonction depend elle meme de 2 autres fonctions importante du projet
 
     }
 ```
+
 ### Le Téléchargement 
 Lorsque l'utilisateur a fait le choix de sont type de fusion (Séquentiel ou Entrelacé), il sera rediriger sur la page Download. 
 Cette page est simple, il suffit a l'utilisateur de télécharger son fichier fusionner. 
@@ -329,3 +332,21 @@ Le lien renvoi vers ce controlleur.
         return $response;
     }
 ```
+#### Problème rencontrer : 
+ * La conversion Cm => FeetInch :  
+ A cause du format des FeetInch dans le tableau Csv (5' 4").  
+ Pour résoudre le problème des guillemets dans une chaine de caractère nous avons dans un premier temps mis les codes HTML de la guillemet simple puis celle de la guillemet double mais ceci n'a pas fonctionner car en effet la taille en cm convertie en feetInch correspondais a celle en feetInch mais pas au niveau des bytes, alors lors de l'execusion il n'étais pas concidérer comme égaux.
+
+#### Solution 
+Nous avons utiliser la concaténation en php 
+```php
+    feetInch = "5' ".'4"';
+```
+#### Amélioration possible :
+ * Obliger l'utilisateur de selectionner des fichier csv afin d'éviter les erreurs.
+ * Gestionnaire disponible pour l'utilisateur avec tous les fichier fusions qu'il a créer.
+
+## Mission 2 
+### Schéma relationnel de la BDD 
+![](Img/Schema_Relationnel.png)
+### Fonction ETL 
