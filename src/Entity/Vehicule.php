@@ -30,6 +30,12 @@ class Vehicule
      */
     private $annee;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Marque::class, inversedBy="blabla")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $Marque;
+
     public function __construct()
     {
         $this->clients = new ArrayCollection();
@@ -90,6 +96,18 @@ class Vehicule
                 $id->setIdVehicule(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getMarque(): ?Marque
+    {
+        return $this->Marque;
+    }
+
+    public function setMarque(?Marque $Marque): self
+    {
+        $this->Marque = $Marque;
 
         return $this;
     }

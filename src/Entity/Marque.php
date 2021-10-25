@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\MarqueRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -14,6 +16,7 @@ class Marque
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @ORM\OneToMany(targetEntity=Vehicule::class, mappedBy="Marque", orphanRemoval=true)
      */
     private $id;
 
@@ -22,9 +25,9 @@ class Marque
      */
     private $Nom;
 
-    public function getId(): ?int
+    public function __construct()
     {
-        return $this->id;
+        $this->id = new ArrayCollection();
     }
 
     public function getNom(): ?string
@@ -35,6 +38,36 @@ class Marque
     public function setNom(string $Nom): self
     {
         $this->Nom = $Nom;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Vehicule[]
+     */
+    public function getid(): Collection
+    {
+        return $this->id;
+    }
+
+    public function addid(Vehicule $id): self
+    {
+        if (!$this->id->contains($id)) {
+            $this->blabla[] = $id;
+            $id->setMarque($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBlabla(Vehicule $id): self
+    {
+        if ($this->id->removeElement($id)) {
+            // set the owning side to null (unless already changed)
+            if ($id->getMarque() === $this) {
+                $id->setMarque(null);
+            }
+        }
 
         return $this;
     }
