@@ -113,13 +113,6 @@ class Client
     private $poids;
 
     /**
-     * @ORM\Column(type="integer")
-     * @ORM\ManyToOne(targetEntity="App\Entity\Client", inversedBy="App\Entity\Vehicule")
-     * @ORM\JoinColumn(name="id_vehicule", referencedColumnName="id")
-     */
-    private $id_vehicule;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $latitude;
@@ -128,6 +121,12 @@ class Client
      * @ORM\Column(type="string", length=255)
      */
     private $longitude;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Vehicule::class, inversedBy="id")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $vehicule;
 
     public function getId(): ?int
     {
@@ -362,18 +361,6 @@ class Client
         return $this;
     }
 
-    public function getId_vehicule(): ?int
-    {
-        return $this->id_vehicule;
-    }
-
-    public function setId_vehicule(int $id_vehicule): self
-    {
-        $this->id_vehicule = $id_vehicule;
-
-        return $this;
-    }
-
     public function getLatitude(): ?string
     {
         return $this->latitude;
@@ -394,6 +381,18 @@ class Client
     public function setLongitude(string $longitude): self
     {
         $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    public function getIdVehicule(): ?Vehicule
+    {
+        return $this->vehicule;
+    }
+
+    public function setIdVehicule(?Vehicule $vehicule): self
+    {
+        $this->vehicule = $vehicule;
 
         return $this;
     }

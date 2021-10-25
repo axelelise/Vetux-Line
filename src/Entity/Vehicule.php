@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\VehiculeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -14,6 +16,7 @@ class Vehicule
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @ORM\OneToMany(targetEntity=Client::class, mappedBy="id_vehicule", orphanRemoval=true)
      */
     private $id;
 
@@ -27,17 +30,15 @@ class Vehicule
      */
     private $annee;
 
-    /**
-     * @ORM\Column(type="integer")
-     * @ORM\ManyToOne(targetEntity="App\Entity\Vehicule", inversedBy="App\Entity\Marque")
-     * @ORM\JoinColumn(name="id_marque", referencedColumnName="id")
-     */
-    private $id_marque;
-
-    public function getId(): ?int
+    public function __construct()
     {
-        return $this->id;
+        $this->clients = new ArrayCollection();
     }
+
+    //public function getId(): ?int
+    //{
+    //    return $this->id;
+    //}
 
     public function getModele(): ?string
     {
@@ -63,14 +64,32 @@ class Vehicule
         return $this;
     }
 
-    public function getId_marque(): ?int
+    /**
+     * @return Collection|Id[]
+     */
+    public function getId(): Collection
     {
-        return $this->id_marque;
+        return $this->id;
     }
 
-    public function setId_marque(int $id_marque): self
+    public function addId(Client $id): self
     {
-        $this->id_marque = $id_marque;
+        if (!$this->id->contains($id)) {
+            $this->id[] = $id;
+            $id->setIdVehicule($this);
+        }
+
+        return $this;
+    }
+
+    public function removeClient(Client $id): self
+    {
+        if ($this->id->removeElement($id)) {
+            // set the owning side to null (unless already changed)
+            if ($id->getIdVehicule() === $this) {
+                $id->setIdVehicule(null);
+            }
+        }
 
         return $this;
     }
