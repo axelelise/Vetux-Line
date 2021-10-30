@@ -2,21 +2,21 @@
 ## Projet 
 ### Information 
 Vetux-Line est un projet scolaire (BTS SIO 2ème année).  
-Afin de réaliser cette application Web nous avons utiliser Symfony 5 (Framework PHP).  
-IDE : PhpStrom  
+Afin de réaliser cette application Web nous avons utilisé Symfony 5 (Framework PHP).  
+IDE : PhpStorm  
 Version de PHP : 7.4.21  
 Version de composer : 2.1.8
 
 ### Installation du projet 
-#### Récuperer le projet 
+#### Récupérer le projet 
     git clone https://github.com/axelelise/Vetux-Line.git
-#### Récuperer toute les librairies du projet 
+#### Récupérer toutes les librairies du projet 
     composer update
 #### Création de la BDD
-* Dans une application de gestion de base de donnée type PhpMyAdmin, créer une base de donnée vide nommée Vetux-Line et créer un utilisateur qui n'a acces qu'a cele ci.  
+* Dans une application de gestion de base de donnée type PhpMyAdmin, créer une base de donnée vide nommée Vetux-Line et créer un utilisateur qui n'a accès qu'à celle-ci.  
 * Adapter les informations du .env afin qu'il vous corresponde.  
-* Supprimer toute les anciennes migrations dans le dossier du même nom.  
-* Puis créer vos table complete a l'aide des 2 commandes suivante.  
+* Supprimer toutes les anciennes migrations dans le dossier du même nom.  
+* Puis créer vos tables complète à l'aide des 2 commandes suivantes.  
 #####   
 ```bash
     php bin/console make:migration
@@ -28,22 +28,22 @@ La société VETUX-LINE reçoit de la part de ses partenaires, tous les mois, 2 
 
 ### Présentation de la Mission
 1. **Fusion++**  
-Dans la première partie il nous ai demander de créer une application pour permettre a Vetux-Line de pouvoir fusionner les 2 fichiers de ses partenaire en 1, tous en respectant certain critère  
+Dans la première partie il nous ai demandé de créer une application pour permettre à Vetux-Line de pouvoir fusionner les 2 fichiers de ses partenaire en 1, tout en respectant certain critère  
    ####
    * **Critère de Suppression:**
       * Les colonnes ne sont pas toute utile 
-      * Lorsque le taille en inch ne correspond pas a celle en cm, il nous ai demander de supprimer le client afin d'eviter les erreurs 
-      * Lorsque le client n'est pas majeur nous devont le supprimer de la liste
+      * Lorsque le taille en inch ne correspond pas a celle en cm, il nous ai demandé de supprimer le client afin d'éviter les erreurs 
+      * Lorsque le client n'est pas majeur nous devons le supprimer de la liste
       * Nous devons également extraire les clients qui ne sont pas identifiable par leurs numéro de CB (doublons) 
    ####
    * **Critère de Trie**
-     * L'application dois offrir la possibilté a l'utilisateur de pouvoir trier sa fusion sous forme **Séquentiel** ou **Entrelacé**.
+     * L'application doit offrir la possibilité à l'utilisateur de pouvoir trier sa fusion sous forme **Séquentiel** ou **Entrelacé**.
        ####
         ![Séquentiel ou Entrelacé](https://ocapuozzo.github.io/mission-etl-csv/images/fusion-types.png)
    ####  
 
 2. **ETL (Extract Transform Load)**  
-Dans la seconde partie, il nous ai demander d'obtenir ces données sous la forme d’une base de données relationnelle.
+Dans la seconde partie, il nous ai demandé d'obtenir ces données sous la forme d’une base de données relationnelle.
 
 ## Mission 1 :
 
@@ -51,7 +51,7 @@ Dans la seconde partie, il nous ai demander d'obtenir ces données sous la forme
 * Seul l'administrateur a le droit d'inscrire de nouveau utilisateur.
 * Seul les personnes connecter ont le droit de consulter les pages de l'application. 
 ### Upload 
-Afin de pouvoir repondre au besoin de l'utilisateur nous avons créer uploader. 
+Afin de pouvoir répondre au besoin de l'utilisateur nous avons créé uploader. 
 ####
 ![](Img/Upload.png)
 
@@ -93,8 +93,8 @@ Il suffit à l'utilisateur de cliquer sur les boutons Browse et de sélectionner
 ```
 
 ### Le Choix du Mélange 
-Une fois que l'utilisateur a importer ses fichiers correctement, celui ci est rediriger sur cette page.  
-Ici comme demander dans le cahier des charges l'utilisateur peut choisir sont type de mélange, **Entrelacé** ou **Séquentiel**.
+Une fois que l'utilisateur a importé ses fichiers correctement, celui-ci est redirigé sur cette page.  
+Ici comme demander dans le cahier des charges l'utilisateur peut choisir son type de mélange, **Entrelacé** ou **Séquentiel**.
 ####
 ![](Img/Choix.png)
 
@@ -129,7 +129,7 @@ Ici comme demander dans le cahier des charges l'utilisateur peut choisir sont ty
 ```
 ### Fusion
 Maintenant que nous disposons des fichiers CSV importer par l'utilisateur, ainsi que du type de tri qu'il souhaite utiliser, nous allons pouvoir passer à la fusion.  
-Cette tâche s'execute en arrière plan, l'utilisateur n'a donc pas d'affichage pour voir la fusion s'executer 
+Cette tâche s'exécute en arrière plan, l'utilisateur n'a donc pas d'affichage pour voir la fusion s'exécuter 
 
 #### Explication du code 
 ```php 
@@ -164,7 +164,7 @@ Cette tâche s'execute en arrière plan, l'utilisateur n'a donc pas d'affichage 
         return $this->render('Fusion/download.html.twig');
     }
 ```
-Ce code utilise la fonction fusion. Celle ci est très importante c'est pourquoi nous allons aussi expliquer sont fonctionnement.  
+Ce code utilise la fonction fusion. Celle-ci est très importante c'est pourquoi nous allons aussi expliquer son fonctionnement.  
 
 ```php
     // src/Service/Fusion.php
@@ -232,9 +232,9 @@ Ce code utilise la fonction fusion. Celle ci est très importante c'est pourquoi
     }
 ```
 
-Cette fonction depend elle meme de 2 autres fonctions importante du projet
- * La fonction **selection** qui vas sélectioner seulement les colonnes du fichier csv qui nous intéresse.  
- * La fonction **trie** qui vas supprimer toute les lignes qui ne correspond pas au critère de l'utilisateur.  
+Cette fonction depend elle meme de 2 autres fonctions importantes du projet
+ * La fonction **selection** qui vas sélectionner seulement les colonnes du fichier csv qui nous intéresse.  
+ * La fonction **trie** qui vas supprimer toutes les lignes qui ne correspondent pas au critère de l'utilisateur.  
 
 #### Fonction Selection :
 ```php
@@ -310,8 +310,8 @@ Cette fonction depend elle meme de 2 autres fonctions importante du projet
 ```
 
 ### Le Téléchargement 
-Lorsque l'utilisateur a fait le choix de sont type de fusion (Séquentiel ou Entrelacé), il sera rediriger sur la page Download. 
-Cette page est simple, il suffit a l'utilisateur de télécharger son fichier fusionner. 
+Lorsque l'utilisateur a fait le choix de son type de fusion (Séquentiel ou Entrelacé), il sera redirigé sur la page Download. 
+Cette page est simple, il suffit à l'utilisateur de télécharger son fichier fusionner. 
 
 ![](Img/Download.png)
 
@@ -335,18 +335,72 @@ Le lien renvoi vers ce controlleur.
 #### Problème rencontrer : 
  * La conversion Cm => FeetInch :  
  A cause du format des FeetInch dans le tableau Csv (5' 4").  
- Pour résoudre le problème des guillemets dans une chaine de caractère nous avons dans un premier temps mis les codes HTML de la guillemet simple puis celle de la guillemet double mais ceci n'a pas fonctionner car en effet la taille en cm convertie en feetInch correspondais a celle en feetInch mais pas au niveau des bytes, alors lors de l'execusion il n'étais pas concidérer comme égaux.
+ Pour résoudre le problème des guillemets dans une chaine de caractère, nous avons dans un premier temps mis les codes HTML de la guillemet simple puis celle de la guillemet double mais ceci n'a pas fonctionné car en effet la taille en cm convertie en feetInch correspondais a celle en feetInch mais pas au niveau des bytes, alors lors de l'exécusion il n'était pas concidéré comme égaux.
 
 #### Solution 
-Nous avons utiliser la concaténation en php 
+Nous avons utilisé la concaténation en php 
 ```php
     feetInch = "5' ".'4"';
 ```
 #### Amélioration possible :
- * Obliger l'utilisateur de selectionner des fichier csv afin d'éviter les erreurs.
- * Gestionnaire disponible pour l'utilisateur avec tous les fichier fusions qu'il a créer.
+ * Obliger l'utilisateur de sélectionner des fichiers csv afin d'éviter les erreurs.
+ * Gestionnaire disponible pour l'utilisateur avec tous les fichiers fusions qu'il a créé.
 
 ## Mission 2 
 ### Schéma relationnel de la BDD 
 ![](Img/Schema_Relationnel.png)
 ### Fonction ETL 
+```php
+    public static function etl ($tab){
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        for($i=0; $i<count($tab); $i++){
+
+            $client = new Client();
+            $client->setGenre($tab[$i]["Gender"]);
+            $client->setTitre($tab[$i]["Title"]);
+            $client->setNom($tab[$i]["GivenName"]);
+            $client->setPrenom($tab[$i]["Surname"]);
+            $client->setEmail($tab[$i]["EmailAddress"]);
+            $client->setDateDeNaissance($tab[$i]["Birthday"]);
+            $client->setNumTel($tab[$i]["TelephoneNumber"]);
+            $client->setCCType($tab[$i]["CCType"]);
+            $client->setCCNumber($tab[$i]["CCNumber"]);
+            $client->setCCExpires($tab[$i]["CCExpires"]);
+            $client->setCVV2 ($tab[$i]["CVV2"]);
+            $client->setAdressePhysique($tab[$i]["StreetAddress"]);
+            $client->setCity($tab[$i]["City"]);
+            $client->setState($tab[$i]["State"]);
+            $client->setCodePostal($tab[$i]["ZipCode"]);
+            $client->setRegion($tab[$i]["CountryFull"]);
+            $client->setFeetInch($tab[$i]["FeetInches"]);
+            $client->setTaille($tab[$i]["Centimeters"]);
+            $client->setPoids($tab[$i]["Pounds"]);
+            $client->setLatitude($tab[$i]["Latitude"]);
+            $client->setLongitude($tab[$i]["Longitude"]);
+            $entityManager->persist($client);
+            $entityManager->flush();
+            
+            $infoVehicules = explode(' ',$tab[$i]["Vehicle"]);
+            $annee = $infoVehicules[0];
+            $marque = $infoVehicules[1];
+            $modele = $infoVehicules[2];
+            
+            $vehicule = new Vehicule();
+            $vehicule->setModele($modele);
+            $vehicule->setAnnee($annee);
+            $entityManager->persist($vehicule);
+            $entityManager->flush();
+            
+            $marque = new Marque();
+            $marque->setNom($marque);
+            $entityManager->persist($marque);
+            $entityManager->flush();
+
+        }
+    }
+```
+
+### Explication de cette fonction 
+Cette fonction va récupérer les informations contenu dans le tableau associatif créé avec le contenu des 2 fichiers CSV.
