@@ -78,7 +78,7 @@ class Fusion
      * @param $tab3 array
      * @return array avec seulement les colonnes voulu
      */
-    public function projection ($tab3){
+    public static function projection ($tab3){
         
         $longueurTab3 = count($tab3);
 
@@ -103,7 +103,7 @@ class Fusion
      * @param $tab3 array
      * @return array trier
      */
-    public function selection($tab3){
+    public static function selection($tab3){
 
         $longueurTab3 = count($tab3);
         $cbUtiliser = [];
@@ -130,5 +130,55 @@ class Fusion
         
         return $tab3;
 
+    }
+
+    public static function etl ($tab){
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        for($i=0; $i<count($tab); $i++){
+
+            $client = new Client();
+            $client->setGenre($tab[$i]["Gender"]);
+            $client->setTitre($tab[$i]["Title"]);
+            $client->setNom($tab[$i]["GivenName"]);
+            $client->setPrenom($tab[$i]["Surname"]);
+            $client->setEmail($tab[$i]["EmailAddress"]);
+            $client->setDateDeNaissance($tab[$i]["Birthday"]);
+            $client->setNumTel($tab[$i]["TelephoneNumber"]);
+            $client->setCCType($tab[$i]["CCType"]);
+            $client->setCCNumber($tab[$i]["CCNumber"]);
+            $client->setCCExpires($tab[$i]["CCExpires"]);
+            $client->setCVV2 ($tab[$i]["CVV2"]);
+            $client->setAdressePhysique($tab[$i]["StreetAddress"]);
+            $client->setCity($tab[$i]["City"]);
+            $client->setState($tab[$i]["State"]);
+            $client->setCodePostal($tab[$i]["ZipCode"]);
+            $client->setRegion($tab[$i]["CountryFull"]);
+            $client->setFeetInch($tab[$i]["FeetInches"]);
+            $client->setTaille($tab[$i]["Centimeters"]);
+            $client->setPoids($tab[$i]["Pounds"]);
+            $client->setLatitude($tab[$i]["Latitude"]);
+            $client->setLongitude($tab[$i]["Longitude"]);
+            $entityManager->persist($client);
+            $entityManager->flush();
+
+            $infoVehicules = explode(' ',$tab[$i]["Vehicle"]);
+            $annee = $infoVehicules[0];
+            $marque = $infoVehicules[1];
+            $modele = $infoVehicules[2];
+
+            $vehicule = new Vehicule();
+            $vehicule->setModele($modele);
+            $vehicule->setAnnee($annee);
+            $entityManager->persist($vehicule);
+            $entityManager->flush();
+
+            $marque = new Marque();
+            $marque->setNom($marque);
+            $entityManager->persist($marque);
+            $entityManager->flush();
+
+        }
     }
 }

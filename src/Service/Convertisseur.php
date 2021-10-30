@@ -18,7 +18,7 @@ class Convertisseur
         return $csv;
     }
 
-    public function age($dateMauvaisFormat) { 
+    public static function age($dateMauvaisFormat) {
         $date = explode("/", $dateMauvaisFormat);
             if(count($date)<=2){
                 $age=0;
@@ -37,7 +37,7 @@ class Convertisseur
        return $age; 
    } 
 
-    public function cmToFeet($cm)
+    public static function cmToFeet($cm)
     {
          $inches = $cm/2.54;
          $feet = intval($inches/12);

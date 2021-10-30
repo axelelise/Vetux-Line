@@ -8,13 +8,9 @@ use PHPUnit\Framework\TestCase;
 class FusionTest extends TestCase{
     public function testMelangeEntrelace(){
 
-        $file1 = "./src/miniFrGer/small-french-client.csv";
-
-        $file2 = "./src/miniFrGer/small-german-client.csv";
-
+        $file1 = "./src/Fichiers_CSV/small-french-client.csv";
+        $file2 = "./src/Fichiers_CSV/small-german-client.csv";
         $typeMelange = "Entrelacé";
-
-
 
         $tab = Fusion::fusion($file1,$file2,$typeMelange);
 
@@ -24,10 +20,8 @@ class FusionTest extends TestCase{
 
     public function testMelangeSequentiel(){
 
-        $file1 = "./src/miniFrGer/small-french-client.csv";
-
-        $file2 = "./src/miniFrGer/small-german-client.csv";
-
+        $file1 = "./src/Fichiers_CSV/small-french-client.csv";
+        $file2 = "./src/Fichiers_CSV/small-german-client.csv";
         $typeMelange = "Séquentiel";
 
         $tab = Fusion::fusion($file1,$file2,$typeMelange);
