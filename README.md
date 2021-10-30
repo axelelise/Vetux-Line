@@ -2,6 +2,7 @@
 ## Projet 
 ### Information 
 Vetux-Line est un projet scolaire (BTS SIO 2ème année).  
+[Énoncé de la Mission](https://ocapuozzo.github.io/mission-etl-csv/)  
 Afin de réaliser cette application Web nous avons utilisé Symfony 5 (Framework PHP).  
 IDE : PhpStorm  
 Version de PHP : 7.4.21  
@@ -332,19 +333,52 @@ Le lien renvoi vers ce controlleur.
         return $response;
     }
 ```
-#### Problème rencontrer : 
+
+### Test Unitaire
+
+```php
+    public function testMelangeEntrelace(){
+
+        $file1 = "./src/miniFrGer/small-french-client.csv";
+        $file2 = "./src/miniFrGer/small-german-client.csv";
+        $typeMelange = "Entrelacé";
+        
+        $tab = Fusion::fusion($file1,$file2,$typeMelange);
+
+        $this->assertEquals("France",$tab[0]["CountryFull"]);
+        $this->assertEquals("Germany",$tab[1]["CountryFull"]);
+    }
+
+    public function testMelangeSequentiel(){
+
+        $file1 = "./src/miniFrGer/small-french-client.csv";
+        $file2 = "./src/miniFrGer/small-german-client.csv";
+        $typeMelange = "Séquentiel";
+        
+        $tab = Fusion::fusion($file1,$file2,$typeMelange);
+
+        $this->assertEquals("France",$tab[0]["CountryFull"]);
+        $this->assertEquals("France",$tab[1]["CountryFull"]);
+    }
+```
+Ici nous avons testé si notre fonction fusion fusionne correctement nos fichiers.   
+Dans le premier test nous testons si fusion avec le mélange Entrelacé nous renvoi bien ["France" ; "Germany" ; "France" ; "Germany"] (1 sur 2).    
+Dans le second test nous testons si fusion avec le mélange Séquentiel nous renvoi bien ["France" ; "France" ; "Germany" ; "Germany"] (Tous les France d'abord puis les Germany).
+
+### Problème rencontrer : 
  * La conversion Cm => FeetInch :  
  A cause du format des FeetInch dans le tableau Csv (5' 4").  
  Pour résoudre le problème des guillemets dans une chaine de caractère, nous avons dans un premier temps mis les codes HTML de la guillemet simple puis celle de la guillemet double mais ceci n'a pas fonctionné car en effet la taille en cm convertie en feetInch correspondais a celle en feetInch mais pas au niveau des bytes, alors lors de l'exécusion il n'était pas concidéré comme égaux.
 
-#### Solution 
+### Solution 
 Nous avons utilisé la concaténation en php 
 ```php
     feetInch = "5' ".'4"';
 ```
-#### Amélioration possible :
+### Amélioration possible :
  * Obliger l'utilisateur de sélectionner des fichiers csv afin d'éviter les erreurs.
  * Gestionnaire disponible pour l'utilisateur avec tous les fichiers fusions qu'il a créé.
+
 
 ## Mission 2 
 ### Schéma relationnel de la BDD 
