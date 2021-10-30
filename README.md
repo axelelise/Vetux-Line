@@ -1,7 +1,17 @@
 # Vetux-Line 
 ## Projet 
 ### Information 
-Vetux-Line est un projet scolaire (BTS SIO 2ème année).  
+Groupe : Les Pad'id    
+
+####
+
+Membres : 
+* Dejardin Benjamin 
+* Elise Axel
+* Anguille Clément    
+
+####
+
 [Énoncé de la Mission](https://ocapuozzo.github.io/mission-etl-csv/)  
 Afin de réaliser cette application Web nous avons utilisé Symfony 5 (Framework PHP).  
 IDE : PhpStorm  
@@ -361,6 +371,8 @@ Le lien renvoi vers ce controlleur.
         $this->assertEquals("France",$tab[1]["CountryFull"]);
     }
 ```
+![](Img/TestUnitaire.png)
+
 Ici nous avons testé si notre fonction fusion fusionne correctement nos fichiers.   
 Dans le premier test nous testons si fusion avec le mélange Entrelacé nous renvoi bien ["France" ; "Germany" ; "France" ; "Germany"] (1 sur 2).    
 Dans le second test nous testons si fusion avec le mélange Séquentiel nous renvoi bien ["France" ; "France" ; "Germany" ; "Germany"] (Tous les France d'abord puis les Germany).
